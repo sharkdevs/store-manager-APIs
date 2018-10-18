@@ -31,4 +31,4 @@ class TestStoreApp(unittest.TestCase):
     def test_malformed_url_on_products_query(self):
         response = self.app.get('/api/v1/produc')
         self.assertEqual(response.status_code, 404)
-
+ 
