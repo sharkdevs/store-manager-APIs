@@ -34,4 +34,4 @@ class TestStoreApp(unittest.TestCase):
 
     def test_adds_a_new_product(self):
         response = self.app.post('/api/v1/products', data = json.dumps(self.sample_data), content_type='application/json')
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,201)
