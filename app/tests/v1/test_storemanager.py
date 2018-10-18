@@ -7,7 +7,7 @@ class TestStoreApp(unittest.TestCase):
     """Setup the test client"""
     def setUp(self):
         app.create_app().testing = True
-        self.app = app.create_app().test_client() 
+        self.app = app.create_app().test_client()  
 
     """ Test whether the application returns and empty list"""
     def test_returns_an_empty_list(self):
