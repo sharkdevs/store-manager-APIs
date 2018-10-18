@@ -11,4 +11,4 @@ class TestStoreApp(unittest.TestCase):
     """ Test whether the application returns and empty list"""
     def test_returns_an_empty_list(self):
         
-        self.assertEqual(self.app.get('/api/v1/products').data, [])
+        self.assertEqual(self.app.get('/api/v1/products').data, b'{"products":[]')
