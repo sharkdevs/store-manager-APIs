@@ -7,7 +7,17 @@ class TestStoreApp(unittest.TestCase):
     """Setup the test client"""
     def setUp(self):
         app.create_app().testing = True
-        self.app = app.create_app().test_client()  
+        self.app = app.create_app().test_client() 
+
+        '''This data shall be used for testing purposes'''
+        self.sample_data = {
+            "product_id" : 1,
+            "product_name" : "Soap",
+            "product_price" : 450,
+            "description" : "Jamaa soap Utapenda",
+            "quantity" : 30,
+            "product_image" : "image/d.jpg"
+        } 
 
     def test_whether_returns_status_code_on_products_query(self):
         self.assertEqual(self.app.get('/api/v1/products').status_code, 200)
