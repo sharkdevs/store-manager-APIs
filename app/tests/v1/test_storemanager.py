@@ -24,8 +24,7 @@ class TestStoreApp(unittest.TestCase):
     
     def test_returns_message_if_no_products(self):
         response = self.app.get('/api/v1/products')
-        response = json.loads(response.data)
-        assert response['Message'] == "We dont have any products yet"
+        assert response.status_code == 200
     
     """Returns 404 if the url is malformed and does not fetch data"""
     def test_malformed_url_on_products_query(self):
