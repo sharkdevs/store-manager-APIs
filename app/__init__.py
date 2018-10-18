@@ -14,4 +14,7 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)
     
+    from app.api.v1 import v1  #import the blueprint
+    app.register_blueprint(v1) #register the blueprint
+    
     return app
