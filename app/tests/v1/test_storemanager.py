@@ -1,5 +1,4 @@
 import unittest
-
 import app
 
 class TestStoreApp(unittest.TestCase):
