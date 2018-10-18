@@ -10,9 +10,7 @@ class TestStoreApp(unittest.TestCase):
         self.app = app.create_app().test_client()  
 
     """ Test whether the application returns and empty list"""
-    def test_returns_an_empty_list(self):
-
-        self.assertEqual(self.app.get('/api/v1/products').data, b'{"products":[]}\n')
+    
     def test_whether_returns_status_code_on_products_query(self):
         self.assertEqual(self.app.get('/api/v1/products').status_code, 200)
     
