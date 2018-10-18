@@ -31,4 +31,7 @@ class TestStoreApp(unittest.TestCase):
     def test_malformed_url_on_products_query(self):
         response = self.app.get('/api/v1/produc')
         self.assertEqual(response.status_code, 404)
- 
+
+    def test_adds_a_new_product(self):
+        response = self.app.post('/api/v1/products', data = json.dumps(self.sample_data), content_type='application/json')
+        self.assertEqual(response.status_code,200)
