@@ -86,4 +86,10 @@ class Users:
             "role" : self.role
         }
         return user
-    
+    def login_user(self,email, password):
+        for user in users:
+            if user['email'] == self.email and user['password'] == self.password:
+                return make_response(jsonify({
+                    "Role" : user['role']
+                }), 200)
+        
