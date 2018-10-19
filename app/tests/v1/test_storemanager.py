@@ -61,6 +61,7 @@ class TestStoreApp(unittest.TestCase):
         response = self.app.get('/api/v1/products/1/wsd')
         self.assertEqual(response.status_code,404)
     
+    '''Returns a message if the id is ou of bounds'''
     def test_gives_error_feedback_if_product_id_out_of_bounds(self):
         response = self.app.get('/api/v1/products/0')
         res = json.loads(response.data)
@@ -71,6 +72,7 @@ class TestStoreApp(unittest.TestCase):
         response = self.app.post('/api/v1/sales', data = json.dumps(self.sample_sales_data), content_type='application/json')
         self.assertEqual(response.status_code,201)
 
+    '''Gives feedback if the product isout of stock'''
     def test_gives_Alert_feedback_if_product_not_in_stock(self):
         products.append(self.sample_data)
         self.sample_sales_data['quantity']=80 #make the quantity more than stock
