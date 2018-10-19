@@ -23,7 +23,7 @@ class Sales():
         }
         return sale
 
-    def get_one_sale_record(self):
+    def get_one_sale_record(self, id):
         if id<=len(sales) and id!=0:
             for s in sales:
                 if s["sales_id"] == id:

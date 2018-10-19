@@ -67,4 +67,5 @@ class CreateSaleOrder(Resource):
 
 class GetOneSaleRecord(Resource):
     '''A get method to retrieve the sale record'''
-    pass
+    def get(self, id):
+        return s.get_one_sale_record(self,id)
