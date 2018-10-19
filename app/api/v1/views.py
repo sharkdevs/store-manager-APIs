@@ -84,5 +84,4 @@ class UserRegistration(Resource):
         users.append(user)
         return make_response(jsonify({
             "Users" : users
-        }))
-
+        }),201)

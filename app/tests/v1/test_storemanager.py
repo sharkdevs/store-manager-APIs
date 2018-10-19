@@ -106,7 +106,4 @@ class TestStoreApp(unittest.TestCase):
         response = self.app.post('/api/v1/users/registration', data = json.dumps(self.sample_user), content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
-    """Test user login"""
-    def test_user_login_success(self):
-        response = self.app.post('/api/v1/users/login', data = json.dumps(self.sample_user), content_type='application/json')
-        self.assertEqual(response.status_code, 200)
+   
