@@ -86,3 +86,8 @@ class TestStoreApp(unittest.TestCase):
     def test_malformed_url_for_get_all_products(self):
         response = self.app.get('/api/v1/saleswsd')
         self.assertEqual(response.status_code,404)
+
+    '''Test to see whether returns a specific sales order'''
+    def test_gets_one_sales_order_by_id(self):
+        response = self.app.get('/api/v1/sales/1')
+        self.assertEqual(response.status_code,200)
