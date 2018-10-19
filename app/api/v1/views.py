@@ -38,4 +38,13 @@ class OneProduct(Resource):
 class CreateSaleOrder(Resource):
     """ Making a sale order"""
     def post(self):
-        pass
+        data = request.get_json()
+
+        # create one sale order
+        sale = s(data['sales_id'],data['product_id'],data['quantity'],data['sales_amount'],data['sales_date']).make_a_sale()
+
+        # add to the sales list and return it
+        sales.append(sale)
+        return make_response(jsonify({
+            "sales" : sales
+        }), 201)
