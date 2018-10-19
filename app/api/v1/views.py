@@ -39,12 +39,24 @@ class CreateSaleOrder(Resource):
     """ Making a sale order"""
     def post(self):
         data = request.get_json()
+        s_id = data['sales_id']
+        p_id = data['product_id']
+        quant = data['quantity']
+        s_amt = data['sales_amount']
+        s_date = data['sales_date']
 
-        # create one sale order
-        sale = s(data['sales_id'],data['product_id'],data['quantity'],data['sales_amount'],data['sales_date']).make_a_sale()
+        #check whether the product is in store and in stock
+        for product in products:
+            if product['product_id']==p_id and product['quantity']>quant:
+                # create one sale order
+                sale = s(s_id,p_id,quant,s_amt,s_date).make_a_sale()
 
-        # add to the sales list and return it
-        sales.append(sale)
-        return make_response(jsonify({
-            "sales" : sales
-        }), 201)
+                # add to the sales list and return it
+                sales.append(sale)
+                return make_response(jsonify({
+                    "sales" : sales
+                }), 201)
+            else:
+                return jsonify({ "Message" : "Product requested not in store"}),404
+
+        
