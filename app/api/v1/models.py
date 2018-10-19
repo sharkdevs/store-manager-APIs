@@ -7,7 +7,7 @@ class Sales():
     """" Initialize a sales description"""
     def __init__(self, sales_id, product_id, quantity, sales_price, sales_date):
         self.product_id = product_id
-        self.sales_id = sales_id
+        self.sales_id = len(sales)+1
         self.quantity = quantity
         self.sales_date = sales_date
         self.amount = sales_price
