@@ -25,7 +25,7 @@ class TestStoreApp(unittest.TestCase):
         self.sample_sales_data = {
             "sales_id" : 1,
             "product_id" : 1,
-            "quantity" : 30,
+            "quantity" : 3,
             "sales_amount" : 450,
             "sales_date" : "31st dec 2018"
         } 
@@ -67,5 +67,11 @@ class TestStoreApp(unittest.TestCase):
         self.assertEqual(res['Message'],"The product requested is not in store") 
 
     def test_adds_a_new_sale_order_successfully(self):
+        products.append(self.sample_data)
         response = self.app.post('/api/v1/sales', data = json.dumps(self.sample_sales_data), content_type='application/json')
         self.assertEqual(response.status_code,201)
+
+    # def test_gives_Alert_feedback_if_product_not_in_stock(self):
+    #     feedback = self.app.get('/api/v1/sales', data = json.dumps(self.sample_sales_data), content_type='application/json')
+    #     res = json.loads(feedback.data)
+    #     self.assertEqual(res['Message'],"Product requested not in store") 
