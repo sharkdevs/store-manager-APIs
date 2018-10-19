@@ -22,6 +22,13 @@ class TestStoreApp(unittest.TestCase):
             "quantity" : 30,
             "product_image" : "image/d.jpg"
         } 
+        self.sample_sales_data = {
+            "sales_id" : 1,
+            "product_id" : 1,
+            "quantity" : 30,
+            "sales_amount" : 450,
+            "sales_date" : "31st dec 2018"
+        } 
 
         products.append(self.sample_data)
         
@@ -60,5 +67,5 @@ class TestStoreApp(unittest.TestCase):
         self.assertEqual(res['Message'],"The product requested is not in store") 
 
     def test_adds_a_new_sale_order_successfully(self):
-        response = self.app.post('/api/v1/sales', data = json.dumps(self.sample_data), content_type='application/json')
+        response = self.app.post('/api/v1/sales', data = json.dumps(self.sample_sales_data), content_type='application/json')
         self.assertEqual(response.status_code,201)
