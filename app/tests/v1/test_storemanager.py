@@ -1,3 +1,5 @@
+from flask import jsonify
+
 
 import unittest
 import app, json
@@ -53,5 +55,6 @@ class TestStoreApp(unittest.TestCase):
         self.assertEqual(response.status_code,404)
     
     def test_gives_error_feedback_if_product_id_out_of_bounds(self):
-        response = json.dumps(self.app.get('/api/v1/products/1'))
-        self.assertEqual(response.data['Message'],"The product requested is not in store")
+        response = self.app.get('/api/v1/products/0')
+        res = json.loads(response.data)
+        self.assertEqual(res['Message'],"The product requested is not in store")

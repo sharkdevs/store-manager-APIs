@@ -23,7 +23,7 @@ class Product():
         }
         return product
     def get_one_product(self,id):
-        if id<=len(products):
+        if id<=len(products) and id!=0:
             for p in products:
                 if p["product_id"] == id:
                     return make_response(jsonify({
