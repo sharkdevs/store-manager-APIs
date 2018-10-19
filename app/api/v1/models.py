@@ -71,6 +71,7 @@ class Product():
 class Users:
     """ Initialize the user """
     def __init__(self, username, email, password, role):
+        self.userid = len(users)+1
         self.username = username
         self.email = email
         self.password = password
@@ -78,6 +79,7 @@ class Users:
 
     def create_user(self):
         user = {
+            "userid": self.userid,
             "username" : self.username,
             "email" : self.email,
             "password" : self.password,
