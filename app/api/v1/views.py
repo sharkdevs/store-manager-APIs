@@ -81,4 +81,8 @@ class UserRegistration(Resource):
         role = data['role']
         
         user = U(uname,email,password,role).create_user()
+        users.append(user)
+        return make_response(jsonify({
+            "Users" : users
+        }))
 
