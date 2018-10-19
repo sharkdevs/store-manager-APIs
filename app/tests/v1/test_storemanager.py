@@ -47,3 +47,11 @@ class TestStoreApp(unittest.TestCase):
     def test_get_a_product_by_id(self):
         response = self.app.get('/api/v1/products/1')
         self.assertEqual(response.status_code,200)
+
+    def test_malformed_url_on_a_given_product_query_by_id(self):
+        response = self.app.get('/api/v1/products/1/wsd')
+        self.assertEqual(response.status_code,404)
+    
+    def test_gives_error_feedback_if_product_id_out_of_bounds(self):
+        response = json.dumps(self.app.get('/api/v1/products/1'))
+        self.assertEqual(response.data['Message'],"The product requested is not in store")
