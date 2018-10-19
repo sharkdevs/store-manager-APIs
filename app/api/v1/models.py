@@ -23,10 +23,13 @@ class Product():
         }
         return product
     def get_one_product(self,id):
-        
-        for p in products:
-            if p["product_id"] == id:
-                return make_response(jsonify({
-                    "product" : p
-                }), 200)
-       
+        if id<=len(products):
+            for p in products:
+                if p["product_id"] == id:
+                    return make_response(jsonify({
+                        "product" : p
+                    }), 200)
+        else:
+            return make_response(jsonify({
+                "Message" : "The product requested is not in store"
+            }), 404)
