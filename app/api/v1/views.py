@@ -59,4 +59,8 @@ class CreateSaleOrder(Resource):
             else:
                 return make_response(jsonify({ "Message" : "Product requested not in store"}),404)
 
-        
+    """Get all sales orders"""
+    def get(self):
+        return make_response(jsonify({
+            "Sales Record" : sales
+        }))
