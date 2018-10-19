@@ -35,10 +35,6 @@ class TestStoreApp(unittest.TestCase):
             "email" : "mesharkz1@gmail.com",
             "password" : "123123",
             "role" : "admin"
-        }
-        self.sample_user_login = {
-            "email" : "mesharkz1@gmail.com",
-            "password" : "123123"
         } 
 
         products.append(self.sample_data)
@@ -109,8 +105,3 @@ class TestStoreApp(unittest.TestCase):
     def test_adds_a_new_user(self):
         response = self.app.post('/api/v1/users/registration', data = json.dumps(self.sample_user), content_type='application/json')
         self.assertEqual(response.status_code, 201)
-
-    """Test user login"""
-    def test_user_login(self):
-        response = self.app.post('/api/v1/users/login', data = json.dumps(self.sample_user_login), content_type='application/json')
-        self.assertEqual(response.status_code, 200)
