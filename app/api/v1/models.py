@@ -22,3 +22,11 @@ class Product():
             "product_image" : self.product_image
         }
         return product
+    def get_one_product(self,id):
+        
+        for p in products:
+            if p["product_id"] == id:
+                return make_response(jsonify({
+                    "product" : p
+                }), 200)
+       
