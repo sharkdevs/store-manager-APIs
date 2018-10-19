@@ -1,6 +1,8 @@
 from flask import make_response, jsonify
 
 products = [] # a list to contain all the products
+sales = [] # A list of all sale records
+
 class Product():
     """" Initialize a product description"""
     def __init__(self, product_name, product_price, description, quantity, product_image):
