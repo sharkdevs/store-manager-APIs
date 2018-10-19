@@ -2,6 +2,7 @@ from flask import Flask, make_response, jsonify,request
 from flask_restful import Resource
 
 from app.api.v1.models import Product as p, products
+from app.api.v1.models import Sales as s, sales
 class Products(Resource):
     """Get the list of products in the list"""
     def get(self):
