@@ -45,5 +45,5 @@ class TestStoreApp(unittest.TestCase):
     
     '''Test whether the api fetches a product successfull'''
     def test_get_a_product_by_id(self):
-        response = self.app.get('/api/v1/products/<int:id>')
+        response = self.app.get('/api/v1/products/1')
         self.assertEqual(response.status_code,200)
