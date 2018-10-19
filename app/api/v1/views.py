@@ -3,6 +3,7 @@ from flask_restful import Resource
 
 from app.api.v1.models import Product as p, products
 from app.api.v1.models import Sales as s, sales
+
 class Products(Resource):
     """Get the list of products in the list"""
     def get(self):
@@ -33,3 +34,8 @@ class OneProduct(Resource):
     def get(self, id):
         self.id=id
         return p.get_one_product(self,self.id)
+
+class CreateSaleOrder(Resource):
+    """ Making a sale order"""
+    def post(self):
+        pass
