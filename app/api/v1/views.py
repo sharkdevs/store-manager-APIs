@@ -57,6 +57,6 @@ class CreateSaleOrder(Resource):
                     "sales" : sales
                 }), 201)
             else:
-                return jsonify({ "Message" : "Product requested not in store"}),404
+                return make_response(jsonify({ "Message" : "Product requested not in store"}),404)
 
         
