@@ -77,3 +77,7 @@ class TestStoreApp(unittest.TestCase):
         feedback = self.app.post('/api/v1/sales', data = json.dumps(self.sample_sales_data), content_type='application/json')
         res = json.loads(feedback.data)
         self.assertEqual(res['Message'],"Product requested not in store") 
+
+    """A test to check whether sales are returned successfull"""
+    def test_return_all_sales_orders(self):
+        self.assertEqual(self.app.get('/api/v1/sales').status_code, 200)
