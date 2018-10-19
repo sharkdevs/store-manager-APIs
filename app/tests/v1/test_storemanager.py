@@ -57,4 +57,4 @@ class TestStoreApp(unittest.TestCase):
     def test_gives_error_feedback_if_product_id_out_of_bounds(self):
         response = self.app.get('/api/v1/products/0')
         res = json.loads(response.data)
-        self.assertEqual(res['Message'],"The product requested is not in store")
+        self.assertEqual(res['Message'],"The product requested is not in store") 
