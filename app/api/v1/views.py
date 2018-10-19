@@ -3,6 +3,7 @@ from flask_restful import Resource
 
 from app.api.v1.models import Product as p, products
 from app.api.v1.models import Sales as s, sales
+from app.api.v1.models import Users as U, users
 
 class Products(Resource):
     """Get the list of products in the list"""
@@ -69,3 +70,15 @@ class GetOneSaleRecord(Resource):
     '''A get method to retrieve the sale record'''
     def get(self, id):
         return s.get_one_sale_record(self,id)
+
+class UserRegistration(Resource):
+    """ Register a new user"""
+    def post(self):
+        data = request.get_json()
+        uname = data['username']
+        email = data['email']
+        password = data['password']
+        role = data['role']
+        
+        user = U(uname,email,password,role).create_user()
+
