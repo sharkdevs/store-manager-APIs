@@ -1,7 +1,7 @@
 from flask import Flask
 
 """Function to create the app instance"""
-def create_app(test_config=None):
+def create_app(test_config):
     app = Flask(__name__,instance_relative_config=True)
 
     #set the secret key
