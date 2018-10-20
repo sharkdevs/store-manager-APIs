@@ -9,7 +9,6 @@ class Development(Config):
     DEBUG = True
     TESTING = True
 
-configurations = {
-    "production" : Config,
+app_config = {
     "development" : Development
 }
