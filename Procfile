@@ -1,1 +1,1 @@
-web: gunicorn store-manager-APIs:app
+web: gunicorn run:app
