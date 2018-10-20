@@ -5,14 +5,13 @@ import unittest
 import app, json
 
 from app.api.v1.models import products
-from app import create_app
 
 class TestStoreApp(unittest.TestCase):
 
     """Setup the test client"""
     def setUp(self):
-        test_app = create_app(config_name='testing')
-        self.app = test_app.test_client() 
+        app.create_app().testing = True
+        self.app = app.create_app().test_client() 
 
         '''This data shall be used for testing purposes'''
         self.sample_data = {
