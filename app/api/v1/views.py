@@ -79,6 +79,17 @@ class UserLogin(Resource):
     def post(self):
 
         user = required.parse_args()
-        return make_response(jsonify({
-            "User" : user
-        }))
+        registered_user = U.filter_user_detail(self,user['email'])
+        if not registered_user:
+            return make_response(jsonify({
+                "Message" : "{} is not a registered user".format(user['email'])
+            }))
+
+        if registered_user[0]['password'] == user['password']:
+            return make_response(jsonify({
+                "User" : user
+            }), 200)
+        else:
+            return make_response(jsonify({
+                "Message" : "Incorrect Password"
+            }))

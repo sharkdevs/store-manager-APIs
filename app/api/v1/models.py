@@ -86,6 +86,12 @@ class Users:
             "role" : self.role
         }
         return user
+    
+    def filter_user_detail(self,email):
+        user = [user for user in users if user['email']==email]
+        return user
+
+    
 class Processess:
 
     """Process to create a sale record"""
