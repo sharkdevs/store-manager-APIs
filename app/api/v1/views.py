@@ -1,10 +1,17 @@
 from flask import Flask, make_response, jsonify,request
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
+
 
 from app.api.v1.models import Product as p, products
 from app.api.v1.models import Sales as s, sales
 from app.api.v1.models import Users as U, users
 from app.api.v1.models import Processess
+
+
+"""Required details for login"""
+required = reqparse.RequestParser()
+required.add_argument('email', help = "You should enter you email to login", required = True)
+required.add_argument('password',help = "Password required to continue", required = True)
 
 class Products(Resource):
     """Get the list of products in the list"""
@@ -68,7 +75,10 @@ class UserRegistration(Resource):
             "Users" : users
         }),201)
 class UserLogin(Resource):
+    
     def post(self):
+
+        user = required.parse_args()
         return make_response(jsonify({
-            "Login" : "User login"
+            "User" : user
         }))
