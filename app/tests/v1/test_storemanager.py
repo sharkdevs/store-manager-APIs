@@ -108,4 +108,4 @@ class TestStoreApp(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_user_login(self):
-        self.assertEqual(self.app.post('/api/v1/users/registration').status_code, 200)
+        self.assertEqual(self.app.post('/api/v1/users/login').status_code, 200)

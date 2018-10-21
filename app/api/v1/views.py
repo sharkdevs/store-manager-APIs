@@ -67,3 +67,8 @@ class UserRegistration(Resource):
         return make_response(jsonify({
             "Users" : users
         }),201)
+class UserLogin(Resource):
+    def post(self):
+        return make_response(jsonify({
+            "Login" : "User login"
+        }))

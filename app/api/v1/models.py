@@ -87,6 +87,8 @@ class Users:
         }
         return user
 class Processess:
+
+    """Process to create a sale record"""
     def make_a_sale(self):
         self.data = request.get_json()
         self.p_id = self.data['product_id']
