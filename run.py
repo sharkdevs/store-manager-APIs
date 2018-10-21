@@ -1,8 +1,7 @@
 import os
 from app import create_app
-from flask_jwt_extended import JWTManager
 
-app = JWTManager(create_app(os.getenv('FLASK_ENV')))
+app = create_app(os.getenv('FLASK_ENV'))
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT',5000))
