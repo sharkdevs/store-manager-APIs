@@ -13,6 +13,7 @@ class TestStoreApp(unittest.TestCase):
     def setUp(self):
         test_app = create_app(config_name='testing')
         self.app = test_app.test_client() 
+
         '''This data shall be used for testing purposes'''
         self.sample_data = {
             "product_id" : 1,

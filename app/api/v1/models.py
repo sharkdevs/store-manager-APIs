@@ -1,4 +1,4 @@
-from flask import make_response, jsonify
+from flask import make_response, jsonify, request
 
 products = [] # a list to contain all the products
 sales = [] # A list of all sale records
@@ -6,7 +6,7 @@ users = [] #a list of users
 
 class Sales():
     """" Initialize a sales description"""
-    def __init__(self, sales_id, product_id, quantity, sales_price, sales_date):
+    def __init__(self, product_id, quantity, sales_price, sales_date):
         self.product_id = product_id
         self.sales_id = len(sales)+1
         self.quantity = quantity
@@ -14,7 +14,7 @@ class Sales():
         self.amount = sales_price
 
     """ Create a product sale."""
-    def make_a_sale(self):
+    def make_a_sale_object(self):
         sale = {
             "sales_id" : self.sales_id,
             "product_id" : self.product_id,
@@ -86,4 +86,25 @@ class Users:
             "role" : self.role
         }
         return user
-    
+class Processess:
+    def make_a_sale(self):
+        self.data = request.get_json()
+        self.p_id = self.data['product_id']
+        self.quant = self.data['quantity']
+        self.s_amt = self.data['sales_amount']
+        self.s_date = self.data['sales_date']
+
+        #check whether the product is in store and in stock
+        for product in products:
+            if product['product_id']==self.p_id and product['quantity']>self.quant:
+                # create one sale order
+                sale = Sales(self.p_id,self.quant,self.s_amt,self.s_date).make_a_sale_object()
+
+                # add to the sales list and return it
+                sales.append(sale)
+                return make_response(jsonify({
+                    "sales" : sales
+                }), 201)
+            else:
+                return make_response(jsonify({ "Message" : "Product requested not in store"}),404)
+
