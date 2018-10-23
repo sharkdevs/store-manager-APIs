@@ -83,4 +83,4 @@ class UserRegistration(Resource):
 class UserLogin(Resource):
     def post(self):
         user = required.parse_args()
-        return U.userlogin(self,user['email'],user['password'])
+        return U.user_login(self,user['email'],user['password'])

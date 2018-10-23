@@ -99,7 +99,7 @@ class Users:
         user = [user for user in users if user['email']==email]
         return user
 
-    def userlogin(self,email,password):
+    def user_login(self,email,password):
         
         registered_user = Users.filter_user_detail(self,email) #check whether the iser is registered
         if not registered_user:

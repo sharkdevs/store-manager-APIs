@@ -7,11 +7,13 @@ import app, json
 from app.api.v1.models import products
 from app import create_app
 from app.tests.v1.models import TestData
+from app.api.v1.models import Users
 class TestStoreApp(unittest.TestCase):
 
     """Setup the test client"""
     def setUp(self):
         test_app = create_app(config_name='testing')
+        test_app.app_context().push()
         self.app = test_app.test_client() 
 
         '''Import all the data to be used for users'''
@@ -19,7 +21,7 @@ class TestStoreApp(unittest.TestCase):
         self.sample_sales_data = TestData.sample_sales_data
         self.sample_user = TestData.sample_user
 
-        
+        authtoken = Users.user_login(self, "mesharkz1@gmail.com", "123123")
 
         products.append(self.sample_data)
         
