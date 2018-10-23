@@ -1,4 +1,5 @@
 from flask import make_response, jsonify, request
+from flask_jwt_extended import create_access_token
 
 products = [] # a list to contain all the products
 sales = [] # A list of all sale records
@@ -115,4 +116,6 @@ class Processess:
                 }), 201)
             else:
                 return make_response(jsonify({ "Message" : "Product requested not in store"}),404)
-
+    def generate_auth_token(self,role):
+        auth_token = create_access_token(identity = role)
+        return make_response(jsonify({"auth_token" : auth_token}),200)

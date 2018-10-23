@@ -1,5 +1,6 @@
 from flask import Flask, make_response, jsonify,request
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import (jwt_required, get_jwt_identity)
 
 
 from app.api.v1.models import Product as p, products
@@ -15,14 +16,16 @@ required.add_argument('password',help = "Password required to continue", require
 
 class Products(Resource):
     """Get the list of products in the list"""
+    @jwt_required
     def get(self): 
+        user_role = get_jwt_identity()
         if len(products)<1:
             return make_response(jsonify({
                 "Message" : "We dont have any products yet"
             }))
         else:
             return make_response(jsonify({
-                "products" : products
+                "Current User" : products
             }),200) 
 
     """Add a new product to the store"""
@@ -75,7 +78,6 @@ class UserRegistration(Resource):
             "Users" : users
         }),201)
 class UserLogin(Resource):
-    
     def post(self):
 
         user = required.parse_args()
@@ -86,9 +88,7 @@ class UserLogin(Resource):
             }))
 
         if registered_user[0]['password'] == user['password']:
-            return make_response(jsonify({
-                "User" : user
-            }), 200)
+            return Processess.generate_auth_token(self, registered_user[0]['role'])
         else:
             return make_response(jsonify({
                 "Message" : "Incorrect Password"
