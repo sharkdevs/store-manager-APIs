@@ -16,17 +16,18 @@ required.add_argument('password',help = "Password required to continue", require
 
 class Products(Resource):
     """Get the list of products in the list"""
-    @jwt_required
     def get(self): 
-        user_role = get_jwt_identity()
-        if len(products)<1:
-            return make_response(jsonify({
-                "Message" : "We dont have any products yet"
-            }))
+        if get_jwt_identity() == "admin":
+            if len(products)<1:
+                return make_response(jsonify({
+                    "Message" : "We dont have any products yet"
+                }))
+            else:
+                return make_response(jsonify({
+                    "Current User" : products
+                }),200) 
         else:
-            return make_response(jsonify({
-                "Current User" : products
-            }),200) 
+            return "Only admins are allowed to post products"
 
     """Add a new product to the store"""
     def post(self):
@@ -77,19 +78,9 @@ class UserRegistration(Resource):
         return make_response(jsonify({
             "Users" : users
         }),201)
+
+        
 class UserLogin(Resource):
     def post(self):
-
         user = required.parse_args()
-        registered_user = U.filter_user_detail(self,user['email'])
-        if not registered_user:
-            return make_response(jsonify({
-                "Message" : "{} is not a registered user".format(user['email'])
-            }))
-
-        if registered_user[0]['password'] == user['password']:
-            return Processess.generate_auth_token(self, registered_user[0]['role'])
-        else:
-            return make_response(jsonify({
-                "Message" : "Incorrect Password"
-            }))
+        return U.userlogin(self,user['email'],user['password'])

@@ -1,9 +1,16 @@
 from flask import make_response, jsonify, request
 from flask_jwt_extended import create_access_token
+from flask_restful import reqparse
 
 products = [] # a list to contain all the products
 sales = [] # A list of all sale records
 users = [] #a list of users
+
+
+"""Required details for login"""
+required = reqparse.RequestParser()
+required.add_argument('email', help = "You should enter you email to login", required = True)
+required.add_argument('password',help = "Password required to continue", required = True)
 
 class Sales():
     """" Initialize a sales description"""
@@ -92,6 +99,20 @@ class Users:
         user = [user for user in users if user['email']==email]
         return user
 
+    def userlogin(self,email,password):
+        
+        registered_user = Users.filter_user_detail(self,email) #check whether the iser is registered
+        if not registered_user:
+            return make_response(jsonify({
+                "Message" : "{} is not a registered user".format(email)
+            }))
+
+        if registered_user[0]['password'] == password: #check user password
+            return Processess.generate_auth_token(self, registered_user[0]['role']) #generate auth token
+        else:
+            return make_response(jsonify({
+                "Message" : "Incorrect Password"
+            }))
     
 class Processess:
 
@@ -116,6 +137,10 @@ class Processess:
                 }), 201)
             else:
                 return make_response(jsonify({ "Message" : "Product requested not in store"}),404)
+
+
     def generate_auth_token(self,role):
         auth_token = create_access_token(identity = role)
-        return make_response(jsonify({"auth_token" : auth_token}),200)
+        return auth_token
+
+    

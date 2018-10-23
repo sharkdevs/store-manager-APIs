@@ -6,7 +6,7 @@ import app, json
 
 from app.api.v1.models import products
 from app import create_app
-
+from app.tests.v1.models import TestData
 class TestStoreApp(unittest.TestCase):
 
     """Setup the test client"""
@@ -14,29 +14,12 @@ class TestStoreApp(unittest.TestCase):
         test_app = create_app(config_name='testing')
         self.app = test_app.test_client() 
 
-        '''This data shall be used for testing purposes'''
-        self.sample_data = {
-            "product_id" : 1,
-            "product_name" : "Soap",
-            "product_price" : 450,
-            "description" : "Jamaa soap Utapenda",
-            "quantity" : 30,
-            "product_image" : "image/d.jpg"
-        } 
-        self.sample_sales_data = {
-            "sales_id" : 1,
-            "product_id" : 1,
-            "quantity" : 3,
-            "sales_amount" : 450,
-            "sales_date" : "31st dec 2018"
-        } 
-        self.sample_user = {
-            "userid" : 1,
-            "username" : "Meshack",
-            "email" : "mesharkz1@gmail.com",
-            "password" : "123123",
-            "role" : "admin"
-        } 
+        '''Import all the data to be used for users'''
+        self.sample_data = TestData.sample_data
+        self.sample_sales_data = TestData.sample_sales_data
+        self.sample_user = TestData.sample_user
+
+        
 
         products.append(self.sample_data)
         
@@ -77,14 +60,22 @@ class TestStoreApp(unittest.TestCase):
 
     def test_adds_a_new_sale_order_successfully(self):
         products.append(self.sample_data)
-        response = self.app.post('/api/v1/sales', data = json.dumps(self.sample_sales_data), content_type='application/json')
+        response = self.app.post(
+            '/api/v1/sales', 
+            data = json.dumps(self.sample_sales_data), 
+            content_type='application/json'
+            )
         self.assertEqual(response.status_code,201)
 
     '''Gives feedback if the product isout of stock'''
     def test_gives_Alert_feedback_if_product_not_in_stock(self):
         products.append(self.sample_data)
         self.sample_sales_data['quantity']=80 #make the quantity more than stock
-        feedback = self.app.post('/api/v1/sales', data = json.dumps(self.sample_sales_data), content_type='application/json')
+        feedback = self.app.post(
+            '/api/v1/sales', 
+            data = json.dumps(self.sample_sales_data), 
+            content_type='application/json'
+            )
         res = json.loads(feedback.data)
         self.assertEqual(res['Message'],"Product requested not in store") 
 
