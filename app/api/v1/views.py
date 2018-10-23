@@ -16,6 +16,7 @@ required.add_argument('password',help = "Password required to continue", require
 
 class Products(Resource):
     """Get the list of products in the list"""
+    @jwt_required
     def get(self): 
         if get_jwt_identity() == "admin":
             if len(products)<1:
@@ -30,6 +31,7 @@ class Products(Resource):
             return "Only admins are allowed to post products"
 
     """Add a new product to the store"""
+    @jwt_required
     def post(self):
         data = request.get_json()
 
@@ -44,16 +46,19 @@ class Products(Resource):
 
 class OneProduct(Resource):
     """Get the product by their id"""
+    @jwt_required
     def get(self, id):
         self.id=id
         return p.get_one_product(self,self.id)
 
 class CreateSaleOrder(Resource):
     """ Making a sale order"""
+    @jwt_required
     def post(self):
         return Processess.make_a_sale(self)
         
     """Get all sales orders"""
+    @jwt_required
     def get(self):
         return make_response(jsonify({
             "Sales Record" : sales
@@ -61,6 +66,7 @@ class CreateSaleOrder(Resource):
 
 class GetOneSaleRecord(Resource):
     '''A get method to retrieve the sale record'''
+    @jwt_required
     def get(self, id):
         return s.get_one_sale_record(self,id)
 

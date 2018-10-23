@@ -21,15 +21,25 @@ class TestStoreApp(unittest.TestCase):
         self.sample_sales_data = TestData.sample_sales_data
         self.sample_user = TestData.sample_user
 
-        authtoken = Users.user_login(self, "mesharkz1@gmail.com", "123123")
+        #register a sample user
+        self.app.post(
+            '/api/v1/users/registration', 
+            data = json.dumps(self.sample_user), 
+            content_type='application/json'
+            )
 
+        #login a sample user
+        self.auth_token = Users.user_login(self, "mesharkz1@gmail.com", "123123")
+
+        #Add a sample product to the list
         products.append(self.sample_data)
+
         
     def test_whether_returns_status_code_on_products_query(self):
-        self.assertEqual(self.app.get('/api/v1/products').status_code, 200)
+        self.assertEqual(self.app.get('/api/v1/products', headers = dict(Authorization="Bearer " + self.auth_token), content_type='application/json').status_code, 200)
     
     def test_returns_message_if_no_products(self):
-        response = self.app.get('/api/v1/products')
+        response = self.app.get('/api/v1/products', headers = dict(Authorization = "Bearer " + self.auth_token), content_type='application/json')
         assert response.status_code == 200
     
     """Returns 404 if the url is malformed and does not fetch data"""
