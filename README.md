@@ -21,25 +21,25 @@ This branch contains a set of API endpoints including a login endpoitn. The endp
 ## Set Up instructions
 The following are a set of steps you can follow to set tu the application
 #### Cloning the application
-`git clone https://github.com/sharkdevs/store-manager-APIs/`
+git clone https://github.com/sharkdevs/store-manager-APIs/
 
  #### Configure Virtual environment
-     `pip install Virtialenv
-     `virtualenv venv
-     `source /venv/Scripts/activate` : windows  
-     `source /venv/bin/activate` : linux
+     pip install Virtialenv
+     virtualenv venv
+     source /venv/Scripts/activate : windows  
+     source /venv/bin/activate : linux
 
    ### Install dependancies
-     `pip install -r requirements.txt`
+     pip install -r requirements.txt
     
 ## Unit Testing
 To test the endpointsensure that the following tools are available the follow steps below
    ### Tools:
-     *Postman
+     Postman
 ### Commands
-     The application was tested using `nose` and coverage. To run the tests on the bash terminal use
+  The application was tested using `nose` and coverage. To run the tests on the bash terminal use
      
-     `nosetests --with-coverage --cover-package=app  && coverage report`
+     nosetests --with-coverage --cover-package=app  && coverage report
      
 ## Deployment
 
