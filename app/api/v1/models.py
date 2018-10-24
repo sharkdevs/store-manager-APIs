@@ -2,6 +2,7 @@ from flask import make_response, jsonify
 
 products = [] # a list to contain all the products
 sales = [] # A list of all sale records
+users = [] #a list of users
 
 class Sales():
     """" Initialize a sales description"""
@@ -67,3 +68,22 @@ class Product():
             return make_response(jsonify({
                 "Message" : "The product requested is not in store"
             }), 404)
+class Users:
+    """ Initialize the user """
+    def __init__(self, username, email, password, role):
+        self.userid = len(users)+1
+        self.username = username
+        self.email = email
+        self.password = password
+        self.role = role
+
+    def create_user(self):
+        user = {
+            "userid": self.userid,
+            "username" : self.username,
+            "email" : self.email,
+            "password" : self.password,
+            "role" : self.role
+        }
+        return user
+    

@@ -29,6 +29,13 @@ class TestStoreApp(unittest.TestCase):
             "sales_amount" : 450,
             "sales_date" : "31st dec 2018"
         } 
+        self.sample_user = {
+            "userid" : 1,
+            "username" : "Meshack",
+            "email" : "mesharkz1@gmail.com",
+            "password" : "123123",
+            "role" : "admin"
+        } 
 
         products.append(self.sample_data)
         
@@ -93,3 +100,10 @@ class TestStoreApp(unittest.TestCase):
     def test_gets_one_sales_order_by_id(self):
         response = self.app.get('/api/v1/sales/1')
         self.assertEqual(response.status_code,200)
+    
+    """Test user registration"""
+    def test_adds_a_new_user(self):
+        response = self.app.post('/api/v1/users/registration', data = json.dumps(self.sample_user), content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+
+   
