@@ -10,3 +10,15 @@ class Product():
         self.description = description
         self.quantity = quantity
         self.product_image = product_image
+
+    """ Create a product."""
+    def create_a_product(self):
+        product = {
+            "product_id" : self.product_id,
+            "product_name" : self.product_name,
+            "product_price" : self.product_price,
+            "description" : self.description,
+            "quantity" : self.quantity,
+            "product_image" : self.product_image
+        }
+        return product
