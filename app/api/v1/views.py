@@ -63,4 +63,9 @@ class CreateSaleOrder(Resource):
     def get(self):
         return make_response(jsonify({
             "Sales Record" : sales
-        }))
+        }), 200)
+
+class GetOneSaleRecord(Resource):
+    '''A get method to retrieve the sale record'''
+    def get(self, id):
+        return s.get_one_sale_record(self,id)

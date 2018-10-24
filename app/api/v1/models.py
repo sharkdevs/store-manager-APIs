@@ -23,6 +23,18 @@ class Sales():
         }
         return sale
 
+    def get_one_sale_record(self, id):
+        if id<=len(sales) and id!=0:
+            for s in sales:
+                if s["sales_id"] == id:
+                    return make_response(jsonify({
+                        "sales Order" : s
+                    }), 200)
+        else:
+            return make_response(jsonify({
+                "Message" : "The sales order is not available"
+            }), 404)
+
 class Product():
     """" Initialize a product description"""
     def __init__(self, product_name, product_price, description, quantity, product_image):
