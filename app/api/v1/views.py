@@ -26,3 +26,9 @@ class Products(Resource):
         return make_response(jsonify({
             "products" : products
         }), 201)
+
+class OneProduct(Resource):
+    """Get the product by their id"""
+    def get(self, id):
+        self.id=id
+        return p.get_one_product(self,self.id)

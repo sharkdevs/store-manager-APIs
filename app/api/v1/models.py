@@ -22,3 +22,14 @@ class Product():
             "product_image" : self.product_image
         }
         return product
+    def get_one_product(self,id):
+        if id<=len(products) and id!=0:
+            for p in products:
+                if p["product_id"] == id:
+                    return make_response(jsonify({
+                        "product" : p
+                    }), 200)
+        else:
+            return make_response(jsonify({
+                "Message" : "The product requested is not in store"
+            }), 404)
