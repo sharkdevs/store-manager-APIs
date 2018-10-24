@@ -3,9 +3,9 @@ from flask_restful import Resource, reqparse
 from flask_jwt_extended import (jwt_required, get_jwt_identity)
 
 
-from app.api.v1.models import Product as p, products
-from app.api.v1.models import Sales as s, sales
-from app.api.v1.models import Users as U, users
+from app.api.v1.models import Product, products
+from app.api.v1.models import Sales, sales
+from app.api.v1.models import Users, users
 from app.api.v1.models import Processess
 
 
@@ -36,7 +36,7 @@ class Products(Resource):
         data = request.get_json()
 
         # create one product
-        product = p(data['product_name'],data['product_price'],data['description'],data['quantity'],data['product_image']).create_a_product()
+        product = Product(data['product_name'],data['product_price'],data['description'],data['quantity'],data['product_image']).create_a_product()
 
         # add to a list and return it
         products.append(product)
@@ -49,7 +49,7 @@ class OneProduct(Resource):
     @jwt_required
     def get(self, id):
         self.id=id
-        return p.get_one_product(self,self.id)
+        return Product.get_one_product(self,self.id)
 
 class CreateSaleOrder(Resource):
     """ Making a sale order"""
@@ -68,7 +68,7 @@ class GetOneSaleRecord(Resource):
     '''A get method to retrieve the sale record'''
     @jwt_required
     def get(self, id):
-        return s.get_one_sale_record(self,id)
+        return Sales.get_one_sale_record(self,id)
 
 class UserRegistration(Resource):
     """ Register a new user"""
@@ -79,7 +79,7 @@ class UserRegistration(Resource):
         password = data['password']
         role = data['role']
         
-        user = U(uname,email,password,role).create_user()
+        user = Users(uname,email,password,role).create_user()
         users.append(user)
         return make_response(jsonify({
             "Users" : users
@@ -89,4 +89,4 @@ class UserRegistration(Resource):
 class UserLogin(Resource):
     def post(self):
         user = required.parse_args()
-        return U.user_login(self,user['email'],user['password'])
+        return Users.user_login(self,user['email'],user['password'])

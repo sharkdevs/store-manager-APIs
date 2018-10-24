@@ -16,6 +16,7 @@ class TestStoreApp(unittest.TestCase):
         test_app.app_context().push()
         self.app = test_app.test_client() 
 
+        base_url = '/api/v1'
         '''Import all the data to be used for users'''
         self.sample_data = TestData.sample_data
         self.sample_sales_data = TestData.sample_sales_data
