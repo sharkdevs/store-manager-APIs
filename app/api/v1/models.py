@@ -1,12 +1,20 @@
-from flask import make_response, jsonify
+from flask import make_response, jsonify, request
+from flask_jwt_extended import create_access_token
+from flask_restful import reqparse
 
 products = [] # a list to contain all the products
 sales = [] # A list of all sale records
 users = [] #a list of users
 
+
+"""Required details for login"""
+required = reqparse.RequestParser()
+required.add_argument('email', help = "You should enter you email to login", required = True)
+required.add_argument('password',help = "Password required to continue", required = True)
+
 class Sales():
     """" Initialize a sales description"""
-    def __init__(self, sales_id, product_id, quantity, sales_price, sales_date):
+    def __init__(self, product_id, quantity, sales_price, sales_date):
         self.product_id = product_id
         self.sales_id = len(sales)+1
         self.quantity = quantity
@@ -14,7 +22,7 @@ class Sales():
         self.amount = sales_price
 
     """ Create a product sale."""
-    def make_a_sale(self):
+    def make_a_sale_object(self):
         sale = {
             "sales_id" : self.sales_id,
             "product_id" : self.product_id,
@@ -86,4 +94,53 @@ class Users:
             "role" : self.role
         }
         return user
+    
+    def filter_user_detail(self,email):
+        user = [user for user in users if user['email']==email]
+        return user
+
+    def user_login(self,email,password):
+        
+        registered_user = Users.filter_user_detail(self,email) #check whether the iser is registered
+        if not registered_user:
+            return make_response(jsonify({
+                "Message" : "{} is not a registered user".format(email)
+            }))
+
+        if registered_user[0]['password'] == password: #check user password
+            return Processess.generate_auth_token(self, registered_user[0]['role']) #generate auth token
+        else:
+            return make_response(jsonify({
+                "Message" : "Incorrect Password"
+            }))
+    
+class Processess:
+
+    """Process to create a sale record"""
+    def make_a_sale(self):
+        self.data = request.get_json()
+        self.p_id = self.data['product_id']
+        self.quant = self.data['quantity']
+        self.s_amt = self.data['sales_amount']
+        self.s_date = self.data['sales_date']
+
+        #check whether the product is in store and in stock
+        for product in products:
+            if product['product_id']==self.p_id and product['quantity']>self.quant:
+                # create one sale order
+                sale = Sales(self.p_id,self.quant,self.s_amt,self.s_date).make_a_sale_object()
+
+                # add to the sales list and return it
+                sales.append(sale)
+                return make_response(jsonify({
+                    "sales" : sales
+                }), 201)
+            else:
+                return make_response(jsonify({ "Message" : "Product requested not in store"}),404)
+
+
+    def generate_auth_token(self,role):
+        auth_token = create_access_token(identity = role)
+        return auth_token
+
     
